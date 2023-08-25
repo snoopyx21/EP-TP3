@@ -1,0 +1,3 @@
+- intervalle de confiance (utilisation de moyenne des lots)
+- pas de lots trop gros 
+- moyenne / moyenne = moyenne mais écart type différent

@@ -1,0 +1,126 @@
+MEMO_TCL_NS
+
+
+###############################################################################
+#################################   TCL   #####################################
+###############################################################################
+
+• Printing
+	– puts $filename “string” (default filename is stdout)
+
+
+• Arithmetic Expressions
+	–set value [expr $v1+ $v2]
+
+• Variable substitution
+	–i: the character ‘i’.
+	–$i: the variable i.
+
+• Operation substitution
+	–set i 5 + 6
+		wrong number of arguments
+	–set i {5 + 6}
+		5 + 6
+	–set i [5 + 6]
+		invalid command
+
+• Control Structures
+	–if {condition} then {.......}
+	–for {set i 0} {$i < 10} {incr i 2} {......}
+
+• Procedures
+	–proc proc_name {arg1 arg2...} { ......}
+
+
+• Anti-Slash substitution
+	–set price $2.00
+		can't read "2": no such variable
+	–set price \$2.00
+
+• Other anti-slash substitutions:
+	\[, \], \{, \}, \”, \\, \n, \t.
+
+
+
+###############################################################################
+#################################   NS   ######################################
+###############################################################################
+
+• Create a new simulator object
+	–set ns [new Simulator]
+
+• Schedule events
+	–$ns at <time> “<event>”
+	–<event>: any legitimate ns/tcl commands
+
+• Finish procedure
+	proc finish { } {
+			........
+		exit 0
+	}
+
+• Last line 
+	--$ns run
+
+###############################################################################
+• Custom file
+	–set cwndtrace 
+		[open cwnd.dat w]
+	–$ns at 5 “record_data 0.001”
+
+• Record Procedure
+	proc record_data { duration } {
+		global cwndtrace  ns TCPsrc
+		puts $cwndtrace “[$ns now]  [$TCPsrc set cwnd_]”
+		$ns after $duration “record_data $duration”
+	}
+
+	
+
+•Custom file
+	–set trace [open ns-8-cwnd.tr w]
+
+•Define what to monitor
+	–$ns add-agent-trace $TCPsrc tcp $trace
+	–$ns monitor-agent-trace $TCPsrc
+	–$TCPsrc tracevar cwnd_
+
+###############################################################################
+
+• Creating Trace
+	–set trace [open ns-7.tr w]
+
+• What to trace
+	–$ns trace-all $trace
+
+• Close Trace
+	–$ns flush-trace
+	–close $trace
+
+
+••••••••••••Trace File••••••••••••
+
+	r 25.1624 1 0 ack 40 ------- 0 1.0 0.0 2417 4835
+
+• Event ( r= receive, d= drop, + = enqueue, - = dequeue) : r
+• Timestamp  : 25.1624
+• Nodes : 1 0
+• Packet type : ack
+• Packet size (as set in the IP header)  : 40
+• Flags (Not used here) : -------
+• Flow ID : 0 
+• Source address : 1.0
+• Destination address : 0.0
+• Sequence number : 2417
+• Unique ID : 4835
+
+
+###############################################################################
+################################   OTCL   #####################################
+###############################################################################
+
+•Creating a class–Class class_name–Class class_name –superclass Base_class•Defining instance procedures–class_name instproc proc_name {args} {.....}•Defining instance variables–$selfinstvar variable_name (inside a class method)
+
+
+•Creating an instance–set new_inst [new class_name]•Calling an instance procedure–$new_inst proc_name {args}•Using an instance value–$new_inst set v1 10–set v2 [$new_inst set v1]
+
